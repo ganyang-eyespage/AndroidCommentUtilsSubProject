@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -64,6 +65,17 @@ public class AppUtil {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public static Drawable getActivityIcon(PackageManager manager, Intent intent) {
+    try {
+      ResolveInfo info = manager.resolveActivity(intent, 0);
+      if (info != null) {
+        return info.loadIcon(manager);
+      }
+    } catch (Exception e) {
+    }
+    return null;
   }
 
   public static String getClsNameFromPkgname(Context context, String pkgName) {
