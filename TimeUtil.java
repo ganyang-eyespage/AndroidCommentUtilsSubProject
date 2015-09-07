@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author SongZhiyong
  */
 public class TimeUtil {
+
   /** UTC时间样式 */
   public static final String UTC_TIME_PATTERN = "E MMM dd HH:mm:ss ZZZZ yyyy";
   /** 普通时间样式 */

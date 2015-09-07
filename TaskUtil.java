@@ -109,7 +109,7 @@ public class TaskUtil {
    * @param delay time delayed befor post
    */
   public static void doRapidWorkAndPost(final Worker background, final Worker post,
-      final int delay) {
+      final long delay) {
     mRapidWorkExecutor.submit(new Runnable() {
       @Override public void run() {
         background.work();
@@ -125,7 +125,7 @@ public class TaskUtil {
    * @param post the post work
    * @param delay time delayed befor post
    */
-  public static void postOnMain(Worker post, final int delay) {
+  public static void postOnMain(Worker post, final long delay) {
     mMainHandler.postDelayed(post, delay);
   }
 
