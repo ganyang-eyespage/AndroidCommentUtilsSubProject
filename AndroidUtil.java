@@ -6,8 +6,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.util.DisplayMetrics;
 import com.eyespage.lib.log.Log;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +26,7 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 public class AndroidUtil {
+  private static DisplayMetrics mDisplayMetrics;
   /**
    *  convert the dimen from dp to px
    * @param context
@@ -37,6 +41,33 @@ public class AndroidUtil {
   public static int px2dp(Context context, float pxValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (pxValue / scale + 0.5f);
+  }
+
+  public static DisplayMetrics getDisplayMetrics(Context context) {
+    if (mDisplayMetrics == null) {
+      mDisplayMetrics = context.getResources().getDisplayMetrics();
+    }
+    return mDisplayMetrics;
+  }
+
+  public static int getNavigationBarHeight(Context context, int orientation) {
+    Resources resources = context.getResources();
+    int id = resources.getIdentifier(
+        orientation == Configuration.ORIENTATION_PORTRAIT ? "navigation_bar_height"
+            : "navigation_bar_height_landscape", "dimen", "android");
+    if (id > 0) {
+      return resources.getDimensionPixelSize(id);
+    }
+    return 0;
+  }
+
+  public static int getStatusBarHeight(Context context) {
+    int result = 0;
+    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = context.getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 
   public static int randomColor() {
@@ -129,15 +160,6 @@ public class AndroidUtil {
         destination.close();
       }
     }
-  }
-
-  public int getStatusBarHeight(Context context) {
-    int result = 0;
-    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-    if (resourceId > 0) {
-      result = context.getResources().getDimensionPixelSize(resourceId);
-    }
-    return result;
   }
 
   public static int calculateMemoryCacheSize(Context context) {
