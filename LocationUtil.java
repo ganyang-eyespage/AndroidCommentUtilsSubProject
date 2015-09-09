@@ -84,8 +84,7 @@ public class LocationUtil {
   };
 
   class LocationTimerTask extends TimerTask {
-    @Override
-    public void run() {
+    @Override public void run() {
       mLocationManager.removeUpdates(locationListenerGps);
       mLocationManager.removeUpdates(locationListenerNetwork);
 
@@ -116,7 +115,8 @@ public class LocationUtil {
       mCallback.gotLocation(null);
     }
   }
-  public static abstract class LocationCallback {
-    public abstract void gotLocation(Location location);
+
+  public static interface LocationCallback {
+    void gotLocation(Location location);
   }
 }
