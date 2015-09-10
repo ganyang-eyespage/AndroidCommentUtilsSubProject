@@ -31,7 +31,7 @@ public class LocationUtil {
     } catch (Exception e) {
     }
     if (!mGPSEnable && !mNetworkEnable) {
-      callback.gotLocation(null);
+      callback.onLocationGot(null);
       return false;
     }
     if (mGPSEnable) {
@@ -50,7 +50,7 @@ public class LocationUtil {
   LocationListener locationListenerGps = new LocationListener() {
     public void onLocationChanged(Location location) {
       mTimer.cancel();
-      mCallback.gotLocation(location);
+      mCallback.onLocationGot(location);
       mLocationManager.removeUpdates(this);
       mLocationManager.removeUpdates(locationListenerNetwork);
     }
@@ -68,7 +68,7 @@ public class LocationUtil {
   LocationListener locationListenerNetwork = new LocationListener() {
     public void onLocationChanged(Location location) {
       mTimer.cancel();
-      mCallback.gotLocation(location);
+      mCallback.onLocationGot(location);
       mLocationManager.removeUpdates(this);
       mLocationManager.removeUpdates(locationListenerGps);
     }
@@ -98,25 +98,25 @@ public class LocationUtil {
       }
       if (gpsLocation != null && netLocation != null) {
         if (gpsLocation.getTime() > netLocation.getTime()) {
-          mCallback.gotLocation(gpsLocation);
+          mCallback.onLocationGot(gpsLocation);
         } else {
-          mCallback.gotLocation(netLocation);
+          mCallback.onLocationGot(netLocation);
         }
         return;
       }
       if (gpsLocation != null) {
-        mCallback.gotLocation(gpsLocation);
+        mCallback.onLocationGot(gpsLocation);
         return;
       }
       if (netLocation != null) {
-        mCallback.gotLocation(netLocation);
+        mCallback.onLocationGot(netLocation);
         return;
       }
-      mCallback.gotLocation(null);
+      mCallback.onLocationGot(null);
     }
   }
 
   public static interface LocationCallback {
-    void gotLocation(Location location);
+    void onLocationGot(Location location);
   }
 }
