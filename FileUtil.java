@@ -34,14 +34,14 @@ import org.apache.http.impl.cookie.DateUtils;
  * Created by cylee on 15/3/30.
  */
 public class FileUtil {
-  public static final String APP_NAME = "Bubble";
+  public static final String APP_NAME = "Lifon";
   public static final String COMPANY_NAME = "Eyespage";
   public static final String APP_FOLDER_NAME = COMPANY_NAME + File.separator + APP_NAME;
   public static final String DOWNLOAD_FOLDER_NAME = "Download";
   public static final String CACHE_FOLDER_NAME = "Cache";
   public final static int BYTE_IN_SIZE = 4096;
   public final static String APK_SUFIX_EXT = "i";                  // apk文件扩展符 为了防止第三软件清理掉我们下载的apk
-  public final static String APK_SUFIX_I = "apk" + APK_SUFIX_EXT;  // 我们识别的APK后缀13717547184
+  public final static String APK_SUFIX_I = "apk" + APK_SUFIX_EXT;
   public final static String APK_SUFIX = "apk";
   public static final String[] APKS = new String[] { APK_SUFIX_I, APK_SUFIX };
 
@@ -116,7 +116,11 @@ public class FileUtil {
   }
 
   public static String getCacheFilePath() {
-    File file = new File(getAppSdcardDir() + File.separator + CACHE_FOLDER_NAME);
+    return getCacheFilePath(CACHE_FOLDER_NAME);
+  }
+
+  public static String getCacheFilePath(String cacheFolderName) {
+    File file = new File(getAppSdcardDir() + File.separator + cacheFolderName);
     if (!file.exists()) {
       file.mkdirs();
     }
