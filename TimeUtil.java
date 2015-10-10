@@ -45,7 +45,7 @@ public class TimeUtil {
    * @throws java.text.ParseException 解析错误
    */
   public static Date parse(String pattern, String time) throws ParseException {
-    SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
+    SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.ENGLISH);
     try {
       return sdf.parse(time);
     } catch (ParseException e) {
@@ -53,6 +53,7 @@ public class TimeUtil {
       try {
         date = parse(ISO_TIME_PATTERN_DEPRACATED, time);
       } catch (ParseException e1) {
+        return new Date();
       }
       return date;
     }
