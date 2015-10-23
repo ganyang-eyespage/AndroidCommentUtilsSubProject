@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import com.eyespage.lib.log.Log;
 import java.io.File;
@@ -27,6 +28,7 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 public class AndroidUtil {
+  private static String mMD5IMEI;
   private static DisplayMetrics mDisplayMetrics;
   /**
    *  convert the dimen from dp to px
@@ -114,6 +116,16 @@ public class AndroidUtil {
     } catch (Exception paramContext) {
     }
     return "";
+  }
+
+  public static String getMD5IMEI(Context context) {
+    if (mMD5IMEI == null) {
+      String imei = getIMEI(context);
+      if (!TextUtils.isEmpty(imei)) {
+        mMD5IMEI = MD5.encrypt(imei);
+      }
+    }
+    return mMD5IMEI;
   }
 
   public static void createExternalStoragePrivateFile(Context context, String fileName, int resId) {
