@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import com.eyespage.lib.log.Log;
 import java.io.File;
@@ -103,6 +104,16 @@ public class AndroidUtil {
       throw new AssertionError();
     }
     return app_ver;
+  }
+
+  public static String getIMEI(Context context) {
+    try {
+      String a =
+          ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+      return a;
+    } catch (Exception paramContext) {
+    }
+    return "";
   }
 
   public static void createExternalStoragePrivateFile(Context context, String fileName, int resId) {
