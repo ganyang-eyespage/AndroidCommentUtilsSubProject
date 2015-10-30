@@ -117,6 +117,7 @@ public class AppUtil {
 
   public static boolean startActivity(Context context, Intent intent) {
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     try {
       context.getApplicationContext().startActivity(intent);
       return true;
