@@ -96,6 +96,12 @@ public class TimeUtil {
     return hours + "hrs " + minutes + "mins";
   }
 
+  public static String formatDuringFromSecond(long second) {
+    long mins = second / 60;
+    long secs = second % 60;
+    return mins + ":" + secs;
+  }
+
   public static String toDuration(long duration) {
     StringBuffer res = new StringBuffer();
     for (int i = 0; i < TIMES.size(); i++) {
