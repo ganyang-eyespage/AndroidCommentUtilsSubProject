@@ -42,7 +42,7 @@ import java.util.Set;
  * @see
  */
 public class AppUtil {
-  
+
   public static final String UNKNOWN = "Unknown";
   public static final String GOOGLE_MAPS_PKG_NAME = "com.google.android.apps.maps";
   private static final String TAG = "AppUtils";
@@ -119,7 +119,12 @@ public class AppUtil {
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     try {
-      context.getApplicationContext().startActivity(intent);
+      if (intent.resolveActivity(context.getPackageManager()) != null) {
+        context.getApplicationContext().startActivity(intent);
+      } else {
+        Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        return false;
+      }
       return true;
     } catch (SecurityException e) {
       Toast.makeText(context, R.string.activity_security_error, Toast.LENGTH_SHORT).show();
