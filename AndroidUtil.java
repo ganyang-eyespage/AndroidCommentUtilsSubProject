@@ -40,6 +40,10 @@ public class AndroidUtil {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (dipValue * scale + 0.5f);
   }
+  public static float dip2pxFloat(Context context, float dipValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return dipValue * scale + 0.5f;
+  }
 
   public static int px2dp(Context context, float pxValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
