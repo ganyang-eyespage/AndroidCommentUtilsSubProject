@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class EncryptUtil {
   public static final String TAG = "Encrypt";
   public static final String DEFAULT_CHARSET = "UTF-8";
-  private static final String AES_KEY = "8b318785b67d4ae69f92ec14192a5436";
+  private static final String AES_KEY = "30069bb8c011423e049dfce3a8d21b46";
   private static final String AES_ENCRYPT_MODE = "AES/CBC/PKCS5Padding";
 
   /**
