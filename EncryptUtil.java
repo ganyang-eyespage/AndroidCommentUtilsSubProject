@@ -41,8 +41,9 @@ public class EncryptUtil {
     }
     return "";
   }
-
+  // ============================================ encrypt ============================================ //
   /**
+   * 当前使用的加密
    * AES加密
    * @param encryptBytes 待加密的byte[]
    * @return 加密后的byte[]
@@ -101,6 +102,7 @@ public class EncryptUtil {
   // ============================================ decrypt ============================================ //
 
   /**
+   * * 当前使用的加密
    * AES解密
    * @param decryptBytes 待解密的byte[]
    * @return 解密后的byte[]
