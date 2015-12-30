@@ -7,11 +7,14 @@ package com.eyespage.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 时间日期解析格式化
@@ -123,5 +126,31 @@ public class TimeUtil {
     } else {
       return res.toString();
     }
+  }
+
+  public static String parseEyespageTime(String string) {
+    Pattern p = Pattern.compile("\\{eyespage:([^:]+):(.\\w+)\\}");
+    Matcher matcher = p.matcher(string);
+    while (matcher.find()) {
+      String origin = matcher.group();
+      System.out.println(origin);
+      String[] params = origin.replaceAll("\\{|\\}", "").split(":");
+      Date date = getDate(params[1]);
+      System.out.println(origin + "---" + format(params[2], date));
+      string = string.replace(origin, format(params[2], date));
+    }
+    return string;
+  }
+
+  private static Date getDate(String param) {
+    int delta = 0;
+    if ("today".equals(param)) {
+      delta = 0;
+    } else if ("tomorrow".equals(param)) {
+      delta = 1;
+    }
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DAY_OF_MONTH, delta);
+    return calendar.getTime();
   }
 }
