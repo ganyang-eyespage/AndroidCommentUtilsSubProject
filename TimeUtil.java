@@ -129,7 +129,7 @@ public class TimeUtil {
   }
 
   public static String parseEyespageTime(String string) {
-    Pattern p = Pattern.compile("\\{eyespage:([^:]+):(.\\w+)\\}");
+    Pattern p = Pattern.compile("\\{eyespage:([^:]+):(.[\\w-]+)\\}");
     Matcher matcher = p.matcher(string);
     while (matcher.find()) {
       String origin = matcher.group();
