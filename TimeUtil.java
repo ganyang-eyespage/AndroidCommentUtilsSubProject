@@ -129,15 +129,14 @@ public class TimeUtil {
   }
 
   public static String parseEyespageTime(String string) {
-    Pattern p = Pattern.compile("\\{eyespage:([^:]+):(.[\\w-]+)\\}");
+    Pattern p = Pattern.compile("\\{eyespage:([^:]+):([^\\}]+)\\}");
     Matcher matcher = p.matcher(string);
     while (matcher.find()) {
-      String origin = matcher.group();
-      System.out.println(origin);
-      String[] params = origin.replaceAll("\\{|\\}", "").split(":");
-      Date date = getDate(params[1]);
-      System.out.println(origin + "---" + format(params[2], date));
-      string = string.replace(origin, format(params[2], date));
+      String patterns = matcher.group();
+      String symbol = matcher.group(1);
+      String pattern = matcher.group(2);
+      Date date = getDate(symbol);
+      string = string.replace(patterns, format(pattern, date));
     }
     return string;
   }
