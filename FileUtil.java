@@ -500,8 +500,7 @@ public class FileUtil {
    * 判断当前字符串是否为空
    */
   public static boolean isNullString(String str) {
-    if (str == null || str.equals("")) return true;
-    return false;
+    return str == null || str.equals("");
   }
 
   /**
@@ -637,11 +636,7 @@ public class FileUtil {
       File[] files = path.listFiles(new FilenameFilter() {
 
         @Override public boolean accept(File dir, String filename) {
-          if (filename != null && filename.endsWith(ext)) {
-            return true;
-          } else {
-            return false;
-          }
+          return filename != null && filename.endsWith(ext);
         }
       });
 
@@ -677,11 +672,7 @@ public class FileUtil {
       File[] files = path.listFiles(new FilenameFilter() {
 
         @Override public boolean accept(File dir, String filename) {
-          if (filename.endsWith(ext)) {
-            return true;
-          } else {
-            return false;
-          }
+          return filename.endsWith(ext);
         }
       });
 

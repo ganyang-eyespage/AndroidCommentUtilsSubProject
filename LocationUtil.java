@@ -115,7 +115,7 @@ public class LocationUtil {
       mCallback.onLocationGot(null);
     }
   }
-  public static interface LocationCallback {
+  public interface LocationCallback {
     void onLocationGot(Location location);
   }
 }

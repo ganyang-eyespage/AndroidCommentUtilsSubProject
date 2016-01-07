@@ -11,7 +11,7 @@ public class ShellUtil {
 
     private static String LOG_TAG = ShellUtil.class.getName();
 
-    public static enum SHELL_CMD {
+    public enum SHELL_CMD {
         check_su_binary(new String[] { "/system/xbin/which", "su" });
 
         String[] command;

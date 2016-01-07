@@ -318,9 +318,9 @@ public class BitmapUtil {
             pixR = Color.red(pixColor);
             pixG = Color.green(pixColor);
             pixB = Color.blue(pixColor);
-            newR = newR + (int) (pixR * gauss[idx]);
-            newG = newG + (int) (pixG * gauss[idx]);
-            newB = newB + (int) (pixB * gauss[idx]);
+            newR = newR + pixR * gauss[idx];
+            newG = newG + pixG * gauss[idx];
+            newB = newB + pixB * gauss[idx];
             idx++;
           }
         }
@@ -846,7 +846,7 @@ public class BitmapUtil {
     }
   }
 
-  public static interface IBitmapDecode {
+  public interface IBitmapDecode {
     Bitmap decode(BitmapFactory.Options options);
 
     Bitmap decode();

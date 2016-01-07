@@ -73,7 +73,7 @@ public class SplitWords {
   public static String[] splitCn(String source) {
     SplitWords sw = new SplitWords();
     Set<String> out = new LinkedHashSet<String>();
-    String[] strings = sw.split(source, false);
+    String[] strings = split(source, false);
     out.addAll(Arrays.asList(strings));
     for (String s : strings) {
       out.addAll(Arrays.asList(split(s, true)));
@@ -101,7 +101,7 @@ public class SplitWords {
     //for (String s : strings) {
     //  out.addAll(Arrays.asList(split(s, true)));
     //}
-    System.out.println(Arrays.toString(sw.splitCn("中国字ABC&你好 WeChat TIGERVpn ")));
+    System.out.println(Arrays.toString(splitCn("中国字ABC&你好 WeChat TIGERVpn ")));
   }
   
 } 

@@ -217,10 +217,7 @@ public class AndroidUtil {
         (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    if (gps || network) {
-      return true;
-    }
-    return false;
+    return gps || network;
   }
 
   public static final void openGPSSetting(Context context) {

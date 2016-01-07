@@ -82,7 +82,7 @@ public class ConnectivitySupport {
   }
 
   public interface IConnectivityListener {
-    public void onConnectivityChanged(NetState oldstate, NetState newstate);
+    void onConnectivityChanged(NetState oldstate, NetState newstate);
   }
 
   private NetState mNetState = NetState.NET_CONNECT_WIFI;
