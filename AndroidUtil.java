@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -30,16 +31,15 @@ import static android.os.Build.VERSION_CODES.HONEYCOMB;
 public class AndroidUtil {
   private static String mMD5IMEI;
   private static DisplayMetrics mDisplayMetrics;
+
   /**
-   *  convert the dimen from dp to px
-   * @param context
-   * @param dipValue
-   * @return
+   * convert the dimen from dp to px
    */
   public static int dip2px(Context context, float dipValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (dipValue * scale + 0.5f);
   }
+
   public static float dip2pxFloat(Context context, float dipValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
     return dipValue * scale + 0.5f;
@@ -200,8 +200,7 @@ public class AndroidUtil {
     return 1024 * 1024 * memoryClass / 7;
   }
 
-  @TargetApi(HONEYCOMB)
-  private static class ActivityManagerHoneycomb {
+  @TargetApi(HONEYCOMB) private static class ActivityManagerHoneycomb {
     static int getLargeMemoryClass(ActivityManager activityManager) {
       return activityManager.getLargeMemoryClass();
     }
@@ -218,6 +217,18 @@ public class AndroidUtil {
     boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     return gps || network;
+  }
+
+  public static String getMetadata(Context context, String name) {
+    try {
+      ApplicationInfo appInfo = context.getPackageManager()
+          .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+      if (appInfo.metaData != null) {
+        return appInfo.metaData.getString(name);
+      }
+    } catch (PackageManager.NameNotFoundException e) {
+    }
+    return null;
   }
 
   public static final void openGPSSetting(Context context) {
