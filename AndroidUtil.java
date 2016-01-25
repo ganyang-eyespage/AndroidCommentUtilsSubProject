@@ -200,6 +200,10 @@ public class AndroidUtil {
     return 1024 * 1024 * memoryClass / 7;
   }
 
+  public static String getAppChannel(Context context) {
+    return AndroidUtil.getMetadata(context, "UMENG_CHANNEL");
+  }
+
   @TargetApi(HONEYCOMB) private static class ActivityManagerHoneycomb {
     static int getLargeMemoryClass(ActivityManager activityManager) {
       return activityManager.getLargeMemoryClass();
