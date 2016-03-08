@@ -16,25 +16,21 @@ public class DebugUtil {
 
   public static void logCurrentMem() {
     if (DEBUG) {
-      Log.d(TAG+"#mem: ", getCurrentMem()+" kb");
+      Log.d(TAG + "#mem: ", getCurrentMem() + " kb");
     }
   }
 
   public static void logCurrentMem(String aheadMsg) {
     if (DEBUG) {
-      Log.d(TAG+"#mem: ", aheadMsg +"/"+ getCurrentMem()+" kb");
+      Log.d(TAG + "#mem: ", aheadMsg + "/" + getCurrentMem() + " kb");
     }
   }
 
   public static void logCurrentTime() {
-    if (DEBUG) {
-      Log.d(TAG+"#time: ",System.currentTimeMillis()+" ms");
-    }
+    Log.d(TAG + "#time: ", System.currentTimeMillis() + " ms");
   }
 
   public static void logCurrentTime(String aheadMsg) {
-    if (DEBUG) {
-      Log.d(TAG+"#time: ",aheadMsg+"/"+System.currentTimeMillis()+" ms");
-    }
+    Log.d(TAG + "#time: ", aheadMsg + "/" + System.currentTimeMillis() + " ms");
   }
 }
