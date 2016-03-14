@@ -215,7 +215,7 @@ public class AndroidUtil {
    *
    * @return true 表示开启
    */
-  public static final boolean isGPSOpened(final Context context) {
+  public static boolean isGPSOpened(final Context context) {
     LocationManager locationManager =
         (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -235,7 +235,7 @@ public class AndroidUtil {
     return null;
   }
 
-  public static final void openGPSSetting(Context context) {
+  public static void openGPSSetting(Context context) {
     Intent intent = new Intent();
     intent.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

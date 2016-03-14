@@ -138,7 +138,7 @@ public class TaskUtil {
   }
 
   public static abstract class AsyncWorker<Result> {
-    private final void start(ExecutorService service, Handler mainHandler) {
+    private void start(ExecutorService service, Handler mainHandler) {
       service.submit(new Worker() {
         @Override public void work() {
           final Result result = AsyncWorker.this.work();

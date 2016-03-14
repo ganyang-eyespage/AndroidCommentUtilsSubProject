@@ -145,7 +145,7 @@ public class FileUtil {
   /**
    * 存储空间小于200M时不进行默认下载
    */
-  public final static boolean canDownloadApk(double totalSize) {
+  public static boolean canDownloadApk(double totalSize) {
     return getStorageFreeSpace() >= totalSize + 100;
   }
 
@@ -160,7 +160,7 @@ public class FileUtil {
   /**
    * 判断是否为apk
    */
-  public final static boolean isApk(String fileName) {
+  public static boolean isApk(String fileName) {
     if (TextUtils.isEmpty(fileName)) return false;
     String sufix = getExt(fileName).toLowerCase();
     return Arrays.asList(APKS).contains(sufix);
@@ -169,7 +169,7 @@ public class FileUtil {
   /**
    * 关闭流
    */
-  public final static void close(Closeable closeable) {
+  public static void close(Closeable closeable) {
     try {
       if (closeable != null) closeable.close();
     } catch (IOException e) {
@@ -763,7 +763,7 @@ public class FileUtil {
     return maxVersion;
   }
 
-  public final static String read(String filePath) {
+  public static String read(String filePath) {
     BufferedInputStream bis = null;
     ByteArrayOutputStream baos = null;
     try {
@@ -792,7 +792,7 @@ public class FileUtil {
    *
    * @param timemills 1970以来的毫秒数
    */
-  public static final String getGMTTimeString(long timemills) {
+  public static String getGMTTimeString(long timemills) {
     Date date = new Date(timemills);
     return date.toGMTString();
   }
@@ -803,7 +803,7 @@ public class FileUtil {
    * @param gmtTime GMT时间字符串
    * @throws Exception
    */
-  public static final long getMillsTime(String gmtTime) throws Exception {
+  public static long getMillsTime(String gmtTime) throws Exception {
     Date date = DateUtils.parseDate(gmtTime);
     return date.getTime();
   }
