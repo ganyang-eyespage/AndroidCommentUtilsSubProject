@@ -6,6 +6,8 @@ import java.net.URLEncoder;
  * Created by jerome on 7/13/15.
  */
 public class StringUtil {
+  public static final CharSequence EMPTY = "";
+
   public static boolean equals(String str1, String str2) {
     return str1 == null ? str2 == null : str1.equals(str2);
   }
