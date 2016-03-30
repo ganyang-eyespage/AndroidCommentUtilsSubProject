@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import com.eyespage.lib.R;
 import com.eyespage.lib.log.Log;
 import java.io.File;
 import java.io.FileInputStream;
@@ -247,6 +248,14 @@ public class AndroidUtil {
         context.startActivity(intent);
       } catch (Exception e) {
       }
+    }
+  }
+
+  public static String getDistanceDisplay(Context context, float distance) {
+    if (distance > 1000) {
+      return String.format(context.getString(R.string.distance_km), distance / 1000.0);
+    } else {
+      return String.format(context.getString(R.string.distance_m), (int) distance);
     }
   }
 }
