@@ -252,10 +252,13 @@ public class AndroidUtil {
   }
 
   public static String getDistanceDisplay(Context context, float distance) {
-    if (distance > 1000) {
-      return String.format(context.getString(R.string.distance_km), distance / 1000.0);
-    } else {
-      return String.format(context.getString(R.string.distance_m), (int) distance);
+    if (distance > 0) {
+      if (distance > 1000) {
+        return String.format(context.getString(R.string.distance_km), distance / 1000.0);
+      } else {
+        return String.format(context.getString(R.string.distance_m), (int) distance);
+      }
     }
+    return null;
   }
 }
