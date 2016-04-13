@@ -126,6 +126,7 @@ public class AndroidUtil {
   public static String getMD5IMEI(Context context) {
     if (mMD5IMEI == null) {
       String imei = getIMEI(context);
+      Log.d("imei=", imei);
       if (!TextUtils.isEmpty(imei)) {
         mMD5IMEI = MD5.encrypt(imei);
       }
