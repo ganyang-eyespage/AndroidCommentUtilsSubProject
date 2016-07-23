@@ -102,7 +102,11 @@ public class TimeUtil {
   public static String formatDuringFromSecond(long second) {
     long mins = second / 60;
     long secs = second % 60;
-    return mins + ":" + secs;
+    if (mins>0){
+      return String.format(Locale.ENGLISH,"%d分",mins);
+    }else{
+      return String.format(Locale.ENGLISH,"%d秒",secs);
+    }
   }
 
   public static String toDuration(long duration) {
