@@ -30,7 +30,7 @@ public class TaskUtil {
             }
           });
 
-  private static Handler mMainHandler = new Handler(Looper.getMainLooper());
+  public static Handler mMainHandler = new Handler(Looper.getMainLooper());
 
   public static <Params, Progress, Result> void executeAsyncTask(
       AsyncTask<Params, Progress, Result> task, Params... params) {

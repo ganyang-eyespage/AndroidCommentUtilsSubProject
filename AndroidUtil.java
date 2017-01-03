@@ -262,4 +262,12 @@ public class AndroidUtil {
     }
     return null;
   }
+  public static long nextLong(Random rng, long n) {
+    long bits, val;
+    do {
+      bits = (rng.nextLong() << 1) >>> 1;
+      val = bits % n;
+    } while (bits - val + (n - 1) < 0L);
+    return val;
+  }
 }
