@@ -11,6 +11,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -81,6 +83,12 @@ public class AndroidUtil {
   public static int randomColor() {
     Random random = new Random();
     return Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  }
+
+  public static WifiInfo getWifiInfo(Context context) {
+    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+    return wifiInfo;
   }
 
   /**
@@ -262,6 +270,7 @@ public class AndroidUtil {
     }
     return null;
   }
+
   public static long nextLong(Random rng, long n) {
     long bits, val;
     do {
