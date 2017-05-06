@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import com.eyespage.lib.log.Log;
 
 /**
  * 系统联网状态工具类
@@ -18,6 +19,8 @@ import android.net.wifi.WifiManager;
  * @author SongZhiyong
  */
 public class NetUtil {
+  private static final String TAG = "NetUtil";
+
   /**
    * 检查android联网状态
    */
@@ -27,7 +30,21 @@ public class NetUtil {
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     if (manager != null) {
       NetworkInfo info = manager.getActiveNetworkInfo();
-      if (info != null) flag = info.isAvailable();
+      if (info != null) {
+        flag = info.isAvailable();
+        if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+          WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+          WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+          if (wifiInfo != null) {
+            int wifiState = wifiInfo.getRssi();
+            Log.i(TAG, "net rssi:" + wifiState);
+            if (wifiState <= -50) {
+              ToastUtil.showShort(context, "您当前网络环境较差，请检查网络！");
+              //return false;
+            }
+          }
+        }
+      }
     }
     return flag;
   }
