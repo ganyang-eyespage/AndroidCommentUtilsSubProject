@@ -38,7 +38,7 @@ public class NetUtil {
           if (wifiInfo != null) {
             int wifiState = wifiInfo.getRssi();
             Log.i(TAG, "net rssi:" + wifiState);
-            if (wifiState <= -50) {
+            if (wifiState < -50) {
               ToastUtil.showShort(context, "您当前网络环境较差，请检查网络！");
               //return false;
             }
