@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import com.eyespage.lib.log.Log;
 
 /**
  * 系统联网状态工具类
@@ -31,18 +32,18 @@ public class NetUtil {
       NetworkInfo info = manager.getActiveNetworkInfo();
       if (info != null) {
         flag = info.isAvailable();
-        //if (info.getType() == ConnectivityManager.TYPE_WIFI) {
-        //  WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        //  WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        //  if (wifiInfo != null) {
-        //    int wifiState = wifiInfo.getRssi();
-        //    Log.i(TAG, "net rssi:" + wifiState);
-        //    if (wifiState < -60) {
-        //      ToastUtil.showShort(context, "您当前网络环境较差，请检查网络！");
-        //      //return false;
-        //    }
-        //  }
-        //}
+        if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+          WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+          WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+          if (wifiInfo != null) {
+            int wifiState = wifiInfo.getRssi();
+            Log.i(TAG, "net rssi:" + wifiState);
+            if (wifiState < -60) {
+              //ToastUtil.showShort(context, "您当前网络环境较差，请检查网络！");
+              //return false;
+            }
+          }
+        }
       }
     }
     return flag;
@@ -53,7 +54,7 @@ public class NetUtil {
     ConnectivityManager connManager =
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-    if (mWifi.isConnected()) {
+    if (mWifi.isConnected() && mWifi.isAvailable()) {
       flag = true;
     }
     return flag;
