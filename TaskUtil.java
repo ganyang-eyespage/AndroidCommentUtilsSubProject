@@ -123,7 +123,7 @@ public class TaskUtil {
    * the delay time.
    *
    * @param post the post work
-   * @param delay time delayed befor post
+   * @param delay time delayed befor post 毫秒
    */
   public static void postOnMain(Worker post, final long delay) {
     mMainHandler.postDelayed(post, delay);
