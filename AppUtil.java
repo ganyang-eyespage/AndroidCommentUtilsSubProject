@@ -122,14 +122,14 @@ public class AppUtil {
       if (intent.resolveActivity(context.getPackageManager()) != null) {
         context.getApplicationContext().startActivity(intent);
       } else {
-        Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
         return false;
       }
       return true;
     } catch (SecurityException e) {
       Toast.makeText(context, R.string.activity_security_error, Toast.LENGTH_SHORT).show();
     } catch (ActivityNotFoundException e) {
-      Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+//      Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
     } catch (Exception e) {
       Toast.makeText(context, R.string.activity_unknown_error, Toast.LENGTH_SHORT).show();
     }
