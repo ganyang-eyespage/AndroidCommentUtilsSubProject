@@ -17,6 +17,8 @@ import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.eyespage.lib.R;
 import com.eyespage.lib.log.Log;
@@ -180,133 +182,159 @@ public class AndroidUtil {
         return false;
     }
 
-  public static void copyFileUsingFileChannels(File sourceFile, File destFile) throws IOException {
-    Log.d("copy to sdcard", "copyFileUsingFileChannels");
-    destFile.createNewFile();
+    public static void copyFileUsingFileChannels(File sourceFile, File destFile) throws IOException {
+        Log.d("copy to sdcard", "copyFileUsingFileChannels");
+        destFile.createNewFile();
 
-    FileChannel source = null;
-    FileChannel destination = null;
+        FileChannel source = null;
+        FileChannel destination = null;
 
-    try {
-      source = new FileInputStream(sourceFile).getChannel();
-      destination = new FileOutputStream(destFile).getChannel();
-      destination.transferFrom(source, 0, source.size());
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (source != null) {
-        source.close();
-      }
-      Log.d("copy to sdcard", destFile.length() + "");
-      if (destination != null) {
-        destination.close();
-      }
+        try {
+            source = new FileInputStream(sourceFile).getChannel();
+            destination = new FileOutputStream(destFile).getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            Log.d("copy to sdcard", destFile.length() + "");
+            if (destination != null) {
+                destination.close();
+            }
+        }
     }
-  }
 
-  public static int calculateMemoryCacheSize(Context context) {
-    ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-    boolean largeHeap = (context.getApplicationInfo().flags & FLAG_LARGE_HEAP) != 0;
-    int memoryClass = am.getMemoryClass();
-    if (largeHeap && SDK_INT >= HONEYCOMB) {
-      memoryClass = ActivityManagerHoneycomb.getLargeMemoryClass(am);
+    public static int calculateMemoryCacheSize(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        boolean largeHeap = (context.getApplicationInfo().flags & FLAG_LARGE_HEAP) != 0;
+        int memoryClass = am.getMemoryClass();
+        if (largeHeap && SDK_INT >= HONEYCOMB) {
+            memoryClass = ActivityManagerHoneycomb.getLargeMemoryClass(am);
+        }
+        // Target ~15% of the available heap.
+        return 1024 * 1024 * memoryClass / 7;
     }
-    // Target ~15% of the available heap.
-    return 1024 * 1024 * memoryClass / 7;
-  }
 
-  public static String getAppChannel(Context context) {
-    return AndroidUtil.getMetadata(context, "UMENG_CHANNEL");
-  }
-
-  @TargetApi(HONEYCOMB) private static class ActivityManagerHoneycomb {
-    static int getLargeMemoryClass(ActivityManager activityManager) {
-      return activityManager.getLargeMemoryClass();
+    public static String getAppChannel(Context context) {
+        return AndroidUtil.getMetadata(context, "UMENG_CHANNEL");
     }
-  }
 
-  /**
-   * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
-   *
-   * @return true 表示开启
-   */
-  public static boolean isGPSOpened(final Context context) {
-    LocationManager locationManager =
-        (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-    boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    return gps || network;
-  }
-
-  public static String getMetadata(Context context, String name) {
-    try {
-      ApplicationInfo appInfo = context.getPackageManager()
-          .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-      if (appInfo.metaData != null) {
-        return appInfo.metaData.getString(name);
-      }
-    } catch (PackageManager.NameNotFoundException e) {
+    /**
+     * 隐藏键盘并清楚focus
+     * @param view
+     */
+    public static void hideKeyBoard(View view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            view.clearFocus();
+        }
     }
-    return null;
-  }
 
-  public static void openGPSSetting(Context context) {
-    Intent intent = new Intent();
-    intent.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    try {
-      context.startActivity(intent);
-    } catch (ActivityNotFoundException ex) {
-      intent.setAction(android.provider.Settings.ACTION_SETTINGS);
-      try {
-        context.startActivity(intent);
-      } catch (Exception e) {
-      }
+    /**
+     * 显示键盘
+     * @param view
+     */
+    public static void showKeyBoard(View view) {
+        if (view != null) {
+            view.requestFocus();
+            InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
-  }
 
-  public static String getDistanceDisplay(Context context, float distance) {
-    if (distance > 0) {
-      if (distance > 1000) {
-        return String.format(context.getString(R.string.distance_km), distance / 1000.0);
-      } else {
-        return String.format(context.getString(R.string.distance_m), (int) distance);
-      }
+    @TargetApi(HONEYCOMB)
+    private static class ActivityManagerHoneycomb {
+        static int getLargeMemoryClass(ActivityManager activityManager) {
+            return activityManager.getLargeMemoryClass();
+        }
     }
-    return null;
-  }
 
-  public static long nextLong(Random rng, long n) {
-    long bits, val;
-    do {
-      bits = (rng.nextLong() << 1) >>> 1;
-      val = bits % n;
-    } while (bits - val + (n - 1) < 0L);
-    return val;
-  }
-
-  /**
-   * 检查手机上是否安装了指定的软件
-   * @param context
-   * @param packageName：应用包名
-   * @return
-   */
-  public static boolean isAvailable(Context context, String packageName){
-    //获取packagemanager
-    final PackageManager packageManager = context.getPackageManager();
-    //获取所有已安装程序的包信息
-    List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
-    //用于存储所有已安装程序的包名
-    List<String> packageNames = new ArrayList<String>();
-    //从pinfo中将包名字逐一取出，压入pName list中
-    if(packageInfos != null){
-      for(int i = 0; i < packageInfos.size(); i++){
-        String packName = packageInfos.get(i).packageName;
-        packageNames.add(packName);
-      }
+    /**
+     * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
+     *
+     * @return true 表示开启
+     */
+    public static boolean isGPSOpened(final Context context) {
+        LocationManager locationManager =
+                (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return gps || network;
     }
-    //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
-    return packageNames.contains(packageName);
-  }
+
+    public static String getMetadata(Context context, String name) {
+        try {
+            ApplicationInfo appInfo = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                return appInfo.metaData.getString(name);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return null;
+    }
+
+    public static void openGPSSetting(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            intent.setAction(android.provider.Settings.ACTION_SETTINGS);
+            try {
+                context.startActivity(intent);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public static String getDistanceDisplay(Context context, float distance) {
+        if (distance > 0) {
+            if (distance > 1000) {
+                return String.format(context.getString(R.string.distance_km), distance / 1000.0);
+            } else {
+                return String.format(context.getString(R.string.distance_m), (int) distance);
+            }
+        }
+        return null;
+    }
+
+    public static long nextLong(Random rng, long n) {
+        long bits, val;
+        do {
+            bits = (rng.nextLong() << 1) >>> 1;
+            val = bits % n;
+        } while (bits - val + (n - 1) < 0L);
+        return val;
+    }
+
+    /**
+     * 检查手机上是否安装了指定的软件
+     *
+     * @param context
+     * @param packageName：应用包名
+     * @return
+     */
+    public static boolean isAvailable(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
+    }
 
 }
