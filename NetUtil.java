@@ -91,4 +91,17 @@ public class NetUtil {
     String name = c.getString(index);
     return name;
   }
+
+  // network available cannot ensure Internet is available
+  public static boolean isNetWorkAvailable(final Context context) {
+    Runtime runtime = Runtime.getRuntime();
+    try {
+      Process pingProcess = runtime.exec("/system/bin/ping -c 1 www.baidu.com");
+      int exitCode = pingProcess.waitFor();
+      return (exitCode == 0);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 }
