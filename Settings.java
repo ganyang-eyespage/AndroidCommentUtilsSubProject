@@ -11,6 +11,7 @@ import java.util.Set;
 public class Settings {
   private static SharedPreferences mPreference;
 
+
   private Settings() {
   }
 
