@@ -46,6 +46,14 @@ public class Settings {
     return mPreference.getLong(key, def);
   }
 
+  public static Float getFloat(String key) {
+    return mPreference.getFloat(key,0);
+  }
+
+  public static Float getFloat(String key, Float def) {
+    return mPreference.getFloat(key, def);
+  }
+
   public static String getString(String key) {
     return mPreference.getString(key, "");
   }
@@ -53,6 +61,7 @@ public class Settings {
   public static String getString(String key, String def) {
     return mPreference.getString(key, def);
   }
+
 
   public static void putInt(String key, int value) {
     putInt(key, value, false);
@@ -75,6 +84,18 @@ public class Settings {
       mPreference.edit().putLong(key, value).commit();
     } else {
       mPreference.edit().putLong(key, value).apply();
+    }
+  }
+
+  public static void putFloat(String key, Float value) {
+    putFloat(key, value, false);
+  }
+
+  public static void putFloat(String key, Float value, boolean immediately) {
+    if (immediately) {
+      mPreference.edit().putFloat(key, value).commit();
+    } else {
+      mPreference.edit().putFloat(key, value).apply();
     }
   }
 
