@@ -233,6 +233,18 @@ public class AndroidUtil {
         }
     }
 
+    public static void hideWebViewKeyBoard(Context contex) {
+
+        //if (contex != null) {
+        //    InputMethodManager imm = ((InputMethodManager) contex.getSystemService(
+        //        Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+        //        Base.getCurrentFocus().getWindowToken(),
+        //        InputMethodManager.HIDE_NOT_ALWAYS);
+        //
+        //}
+    }
+
+
     /**
      * 显示键盘
      * @param view
