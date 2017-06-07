@@ -1,6 +1,7 @@
 package com.eyespage.utils;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -233,15 +234,15 @@ public class AndroidUtil {
         }
     }
 
-    public static void hideWebViewKeyBoard(Context contex) {
+    public static void hideWebViewKeyBoard(Activity ac) {
 
-        //if (contex != null) {
-        //    InputMethodManager imm = ((InputMethodManager) contex.getSystemService(
-        //        Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-        //        Base.getCurrentFocus().getWindowToken(),
-        //        InputMethodManager.HIDE_NOT_ALWAYS);
-        //
-        //}
+        if (ac != null) {
+            InputMethodManager imm = ((InputMethodManager) ac.getSystemService(
+                Context.INPUT_METHOD_SERVICE));
+            imm .hideSoftInputFromWindow(
+                ac.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
 
