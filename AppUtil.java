@@ -122,7 +122,7 @@ public class AppUtil {
       if (intent.resolveActivity(context.getPackageManager()) != null) {
         context.getApplicationContext().startActivity(intent);
       } else {
-//        Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "应用未安装！", Toast.LENGTH_SHORT).show();
         return false;
       }
       return true;
