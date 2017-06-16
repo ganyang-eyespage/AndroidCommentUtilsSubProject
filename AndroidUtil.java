@@ -235,7 +235,6 @@ public class AndroidUtil {
     }
 
     public static void hideWebViewKeyBoard(Activity ac) {
-
         if (ac != null) {
             InputMethodManager imm = ((InputMethodManager) ac.getSystemService(
                 Context.INPUT_METHOD_SERVICE));
