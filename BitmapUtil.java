@@ -33,6 +33,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+ /*
+ * subTreeTest
+ * */
+
 /**
  * 功能：Bitmap相关操作及特效
  *
