@@ -31,7 +31,7 @@ import java.util.Date;
 import org.apache.http.impl.cookie.DateUtils;
 
 /**
- * Created by cylee on 15/3/30.
+ * Created by tucai on 15/3/30.
  */
 public class FileUtil {
   public static final String APP_NAME = "Lifon";
