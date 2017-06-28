@@ -42,6 +42,8 @@ import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 //荼菜Test
 
+// 荼菜Test2
+
 public class AndroidUtil {
     private static String mMD5IMEI;
     private static DisplayMetrics mDisplayMetrics;
