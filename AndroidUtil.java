@@ -39,6 +39,9 @@ import static android.content.pm.ApplicationInfo.FLAG_LARGE_HEAP;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
+
+//荼菜Test
+
 public class AndroidUtil {
     private static String mMD5IMEI;
     private static DisplayMetrics mDisplayMetrics;
